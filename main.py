@@ -8,16 +8,15 @@ import problema4_folhas
 import problema5_ra
 
 OPCOES = {
-    "1": ("Problema 1 - Contar rodas (car.jpg)", problema1_rodas.main),
+    "1": ("Problema 1 - Contar rodas (car.jpg, car2.png)", problema1_rodas.main),
     "2": ("Problema 2 - Linhas da via (via.bmp)", problema2_via.main),
-    "3": ("Problema 3 - Elementos do microscópio (analise.jpg)", problema3_celulas.main),
-    "4": ("Problema 4 - Folhas verdes x amarelas (folhasdemaca.jpg)", problema4_folhas.main),
+    "3": ("Problema 3 - Elementos do microscópio (analise.jpg, bloodcellsdog.jpg)", problema3_celulas.main),
+    "4": ("Problema 4 - Folhas verdes x amarelas (147735485.jpg)", problema4_folhas.main),
     "5": ("Problema 5 - Realidade Aumentada (video/teste.mp4)", problema5_ra.main),
 }
 
 
 def main():
-    sys.argv = sys.argv[:1]  # cada problema usa o arquivo padrão
     while True:
         print("\n=== Extração de Características - OpenCV ===")
         for k, (nome, _) in OPCOES.items():
@@ -31,6 +30,7 @@ def main():
             if k not in OPCOES:
                 print("Opção inválida.")
                 continue
+            sys.argv = sys.argv[:1]  # cada problema usa os arquivos padrão
             try:
                 OPCOES[k][1]()
             except Exception as erro:  # mostra o erro e volta ao menu

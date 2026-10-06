@@ -1,0 +1,10 @@
+Arquivo: 147735485.jpg
+Total de folhas: 2
+Folhas amarelas: 1
+Folhas verdes: 1
+
+Folhas amarelas (id;area_pixels)
+amarela1;176441
+
+Folhas verdes (id;area_pixels)
+verde1;172071

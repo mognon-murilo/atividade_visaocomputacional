@@ -29,6 +29,29 @@ def localizar_arquivo(candidatos, pastas=("", "video", "imagens")):
     )
 
 
+def arquivos_entrada(candidatos):
+    """Caminho passado na linha de comando, ou todos os candidatos que existirem."""
+    if len(sys.argv) > 1 and not sys.argv[1].startswith("-"):
+        return [sys.argv[1]]
+    achados = []
+    for nome in candidatos:
+        for raiz in (BASE, os.getcwd()):
+            caminho = os.path.join(raiz, nome)
+            if os.path.exists(caminho):
+                achados.append(caminho)
+                break
+    if not achados:
+        raise FileNotFoundError(
+            f"Nenhum arquivo encontrado entre {candidatos}. "
+            "Informe o caminho: python <script>.py caminho/do/arquivo"
+        )
+    return achados
+
+
+def nome_base(caminho):
+    return os.path.splitext(os.path.basename(caminho))[0]
+
+
 def ler_imagem(caminho):
     img = cv2.imread(caminho)
     if img is None:

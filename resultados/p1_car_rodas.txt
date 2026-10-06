@@ -1,0 +1,5 @@
+Arquivo: car.jpg
+Total de rodas encontradas: 2
+
+Roda 1: x=164, y=390, raio=33
+Roda 2: x=610, y=392, raio=35

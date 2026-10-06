@@ -1,13 +1,18 @@
 """Problema 3 - Analisa: contar os elementos de uma amostra de microscópio (analise.jpg).
 
 Saídas:
-  (a) resultados/p3_celulas.png - imagem rotulada (retângulo + id em cada elemento)
-  (b) resultados/p3_celulas.txt - total e lista enumerada (id, área em pixels)
+  (a) resultados/p3_<imagem>_celulas.png - imagem rotulada (retângulo + id em cada elemento)
+  (b) resultados/p3_<imagem>_celulas.txt - total e lista enumerada (id, área em pixels)
+
+Sem argumentos processa analise.jpg e bloodcellsdog.jpg.
 """
+import os
+
 import cv2
 import numpy as np
 
-from util import escrever, ler_imagem, localizar_arquivo, salvar_imagem, salvar_texto
+from util import (arquivos_entrada, escrever, ler_imagem, nome_base, salvar_imagem,
+                  salvar_texto)
 
 
 def preencher_buracos(mask):
@@ -68,13 +73,17 @@ def segmentar(img):
 
 
 def main():
-    caminho = localizar_arquivo(["analise.jpg", "bloodcellsdog.jpg"])
+    for caminho in arquivos_entrada(["analise.jpg", "bloodcellsdog.jpg"]):
+        processar(caminho)
+
+
+def processar(caminho):
     print(f"Problema 3 - entrada: {caminho}")
     img = ler_imagem(caminho)
     elementos = segmentar(img)
 
     saida = img.copy()
-    linhas = [f"Arquivo: {caminho}", f"Total de elementos encontrados: {len(elementos)}", "",
+    linhas = [f"Arquivo: {os.path.basename(caminho)}", f"Total de elementos encontrados: {len(elementos)}", "",
               "id;area_pixels"]
     for i, e in enumerate(elementos, 1):
         x, y, w, h = e["rect"]
@@ -82,8 +91,8 @@ def main():
         escrever(saida, str(i), (x + 2, y + 12), escala=0.35)
         linhas.append(f"{i};{e['area']}")
 
-    salvar_imagem("p3_celulas.png", saida)
-    salvar_texto("p3_celulas.txt", linhas)
+    salvar_imagem(f"p3_{nome_base(caminho)}_celulas.png", saida)
+    salvar_texto(f"p3_{nome_base(caminho)}_celulas.txt", linhas)
     print(f"  {len(elementos)} elemento(s) detectado(s)")
 
 
